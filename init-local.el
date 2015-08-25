@@ -7,13 +7,14 @@
 ;; Check if the system is my MacBook Pro
 (defun computer-is-violin ()
   (interactive)
-  "Return true if the system we are running on is my PC at work"
-  (string-equal system-name "Violin.local"))
+  "Return true if the system we are running on is my MacBook Pro"
+  (string-equal system-name "Violin"))
 
 
 ;; Load extra packages
 (prelude-require-packages
- '(monokai-theme linum-off neotree wakatime-mode))
+ '(monokai-theme golden-ratio ace-window smooth-scrolling
+                 linum-off neotree wakatime-mode))
 
 
 ;; Set default theme
@@ -23,6 +24,16 @@
 ;; Set initial and default frame size
 (setq initial-frame-alist '((width . 150) (height . 70)))
 (setq default-frame-alist '((width . 120) (height . 60)))
+
+
+;; Turn on smooth scrolling
+(require 'smooth-scrolling)
+
+
+;; auto resize windows to golden ratio
+(require 'golden-ratio)
+(golden-ratio-mode 1)
+(setq golden-ratio-auto-scale t)
 
 
 ;; Set default font
@@ -85,6 +96,16 @@
 ;; Turn off scroll bar
 (when (fboundp 'set-scroll-bar-mode)
   (set-scroll-bar-mode nil))
+
+
+;; Turn on more ace-window triggers
+;; https://github.com/abo-abo/ace-window
+;; x - delete
+;; b - split horizontally
+;; v - split vertically
+;; o - maximize current window
+(require 'ace-window)
+(setq aw-dispatch-always t)
 
 
 ;; Map HOME and END key to be same as C-a and C-e
