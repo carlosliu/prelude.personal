@@ -93,6 +93,15 @@
 ;; (setq prelude-guru nil)
 
 
+;; Disable current line highlight in eshell and ansi-term
+(add-hook 'eshell-mode-hook (lambda ()
+                              (setq-local global-hl-line-mode
+                                          nil)))
+(add-hook 'term-mode-hook (lambda ()
+                            (setq-local global-hl-line-mode
+                                        nil)))
+
+
 ;; Turn off scroll bar
 (when (fboundp 'set-scroll-bar-mode)
   (set-scroll-bar-mode nil))
