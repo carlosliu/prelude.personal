@@ -12,9 +12,13 @@
 
 
 ;; Load extra packages
-(prelude-require-packages
- '(monokai-theme golden-ratio ace-window smooth-scrolling
-                 linum-off neotree wakatime-mode))
+(prelude-require-packages '(monokai-theme
+                            golden-ratio
+                            ace-window
+                            smooth-scrolling
+                            linum-off
+                            neotree
+                            wakatime-mode))
 
 
 ;; Set default theme
@@ -34,6 +38,9 @@
 (require 'golden-ratio)
 (golden-ratio-mode 1)
 (setq golden-ratio-auto-scale t)
+(setq golden-ratio-exclude-modes '("eshell-mode"
+                                   "term-mode"))
+(add-to-list 'golden-ratio-exclude-buffer-names " *NeoTree*")
 
 
 ;; Set default font
@@ -90,10 +97,8 @@
 (setq backup-by-copying-when-linked t)
 
 
-;; (setq prelude-guru nil)
-
-
 ;; Disable current line highlight in eshell and ansi-term
+;; http://emacs.stackexchange.com/a/9748
 (add-hook 'eshell-mode-hook (lambda ()
                               (setq-local global-hl-line-mode
                                           nil)))
