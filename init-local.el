@@ -99,6 +99,14 @@ Version 2015-04-09"
 ;; Assign [F8] to toggle neotree
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
+(setq neo-theme 'nerd)
+(custom-set-faces
+ (set-face-attribute 'neo-button-face      nil :height 120)
+ (set-face-attribute 'neo-file-link-face   nil :height 120)
+ (set-face-attribute 'neo-dir-link-face    nil :height 120)
+ (set-face-attribute 'neo-header-face      nil :height 120)
+ (set-face-attribute 'neo-expand-btn-face  nil :height 120)
+ )
 (require 'projectile)
 (setq projectile-switch-project-action 'neotree-projectile-action)
 
