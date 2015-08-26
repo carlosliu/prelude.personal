@@ -4,6 +4,14 @@
 
 ;;; Code:
 
+;; Load extra packages
+(prelude-require-packages '(monokai-theme
+                            ace-window
+                            linum-off
+                            neotree
+                            wakatime-mode))
+
+
 ;; Check if the system is my MacBook Pro
 (defun computer-is-violin ()
   "Return true if the system we are running on is my MacBook Pro."
@@ -18,8 +26,8 @@
 ;; Xah Lee's implementation of search-current-world
 (defun xah-search-current-word ()
   "Call `isearch' on current word or text selection.
-“word” here is A to Z, a to z, and hyphen 「-」 and underline 「_」, independent of
-syntax table.
+`word' here is A to Z, a to z, and hyphen 「-」 and underline 「_」, independent
+of syntax table.
 URL `http://ergoemacs.org/emacs/modernization_isearch.html'
 Version 2015-04-09"
   (interactive)
@@ -41,15 +49,6 @@ Version 2015-04-09"
     (isearch-yank-string (buffer-substring-no-properties ξp1 ξp2))))
 
 
-;; Load extra packages
-(prelude-require-packages '(monokai-theme
-                            ace-window
-                            smooth-scrolling
-                            linum-off
-                            neotree
-                            wakatime-mode))
-
-
 ;; Set default theme
 (load-theme 'monokai t)
 
@@ -59,20 +58,27 @@ Version 2015-04-09"
 (setq default-frame-alist '((width . 120) (height . 60)))
 
 
-;; Turn on smooth scrolling
-(require 'smooth-scrolling)
+;; scroll one line at a time (less "jumpy" than defaults)
+;; http://stackoverflow.com/a/27102429
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; one line at a time
+(setq-default smooth-scroll-margin 0)
+(setq scroll-step 1
+      scroll-margin 1
+      scroll-conservatively 100000)
 
 
-;; Set default font
-;; Use smaller font and shorter mode line  on laptop
+;; Compact mode line
 (require 'smart-mode-line)
+(setq sml/shorten-directory t)
+(setq sml/shorten-modes t)
+(setq sml/name-width 25)
+(setq sml/mode-width 'full)
+
+
+;; Set default font, use smaller font on laptop
 (if (computer-is-violin)
     (progn
       (add-to-list 'default-frame-alist '(font . "PragmataPro-13"))
-      (setq sml/shorten-directory t)
-      (setq sml/shorten-modes t)
-      (setq sml/name-width 25)
-      (setq sml/mode-width 'full)
       )
   (add-to-list 'default-frame-alist '(font . "Menlo-15")))
 
@@ -93,6 +99,7 @@ Version 2015-04-09"
 ;; Assign [F8] to toggle neotree
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
+(require 'projectile)
 (setq projectile-switch-project-action 'neotree-projectile-action)
 
 
@@ -102,7 +109,7 @@ Version 2015-04-09"
 
 
 ;; EShell <TAB> file/directory completion case insensitive
-(require 'eshell)
+(require 'em-cmpl)
 (setq eshell-cmpl-ignore-case t)
 
 
