@@ -6,14 +6,43 @@
 
 ;; Check if the system is my MacBook Pro
 (defun computer-is-violin ()
+  "Return true if the system we are running on is my MacBook Pro."
   (interactive)
-  "Return true if the system we are running on is my MacBook Pro"
-  (string-equal system-name "Violin"))
+  (string-equal
+   (if (string-match "^\\([a-zA-Z0-9_-]+\\)\\." system-name)
+       (match-string 1 system-name)
+     system-name)
+   "Violin"))
+
+
+;; Xah Lee's implementation of search-current-world
+(defun xah-search-current-word ()
+  "Call `isearch' on current word or text selection.
+“word” here is A to Z, a to z, and hyphen 「-」 and underline 「_」, independent of
+syntax table.
+URL `http://ergoemacs.org/emacs/modernization_isearch.html'
+Version 2015-04-09"
+  (interactive)
+  (let ( ξp1 ξp2 )
+    (if (use-region-p)
+        (progn
+          (setq ξp1 (region-beginning))
+          (setq ξp2 (region-end)))
+      (save-excursion
+        (skip-chars-backward "-_A-Za-z0-9")
+        (setq ξp1 (point))
+        (right-char)
+        (skip-chars-forward "-_A-Za-z0-9")
+        (setq ξp2 (point))))
+    (setq mark-active nil)
+    (when (< ξp1 (point))
+      (goto-char ξp1))
+    (isearch-mode t)
+    (isearch-yank-string (buffer-substring-no-properties ξp1 ξp2))))
 
 
 ;; Load extra packages
 (prelude-require-packages '(monokai-theme
-                            golden-ratio
                             ace-window
                             smooth-scrolling
                             linum-off
@@ -34,15 +63,6 @@
 (require 'smooth-scrolling)
 
 
-;; auto resize windows to golden ratio
-(require 'golden-ratio)
-(golden-ratio-mode 1)
-(setq golden-ratio-auto-scale t)
-(setq golden-ratio-exclude-modes '("eshell-mode"
-                                   "term-mode"))
-(add-to-list 'golden-ratio-exclude-buffer-names " *NeoTree*")
-
-
 ;; Set default font
 ;; Use smaller font and shorter mode line  on laptop
 (require 'smart-mode-line)
@@ -52,7 +72,8 @@
       (setq sml/shorten-directory t)
       (setq sml/shorten-modes t)
       (setq sml/name-width 25)
-      (setq sml/mode-width 'full))
+      (setq sml/mode-width 'full)
+      )
   (add-to-list 'default-frame-alist '(font . "Menlo-15")))
 
 
@@ -120,6 +141,11 @@
 ;; o - maximize current window
 (require 'ace-window)
 (setq aw-dispatch-always t)
+
+
+;; Bind `C-*' and `C-#' to search current word, similar to VIM
+(global-set-key (kbd "C-*") 'xah-search-current-word)
+(global-set-key (kbd "C-#") 'xah-search-current-word)
 
 
 ;; Map HOME and END key to be same as C-a and C-e
