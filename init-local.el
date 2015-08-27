@@ -9,6 +9,7 @@
                             ace-window
                             linum-off
                             neotree
+                            google-translate
                             wakatime-mode))
 
 
@@ -159,7 +160,6 @@ Version 2015-04-09"
 
 ;; Bind `C-*' and `C-#' to search current word, similar to VIM
 (global-set-key (kbd "C-*") 'xah-search-current-word)
-(global-set-key (kbd "C-#") 'xah-search-current-word)
 
 
 ;; Map HOME and END key to be same as C-a and C-e
@@ -183,6 +183,13 @@ Version 2015-04-09"
                 (lambda () (interactive)
                   (condition-case nil (scroll-down)
                     (beginning-of-buffer (goto-char (point-min))))))
+
+
+;; Setup google translate
+(require 'google-translate)
+(require 'google-translate-default-ui)
+(setq google-translate-default-target-language '"zh-CN")
+(global-set-key "\C-cT" 'google-translate-at-point)
 
 
 ;; Launch Emacs server
