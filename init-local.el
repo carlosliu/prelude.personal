@@ -13,50 +13,8 @@
                             wakatime-mode))
 
 
-;; Check if the system is my MacBook Pro
-(defun computer-is-violin ()
-  "Return true if the system we are running on is my MacBook Pro."
-  (interactive)
-  (string-equal
-   (if (string-match "^\\([a-zA-Z0-9_-]+\\)\\." system-name)
-       (match-string 1 system-name)
-     system-name)
-   "Violin"))
-
-
-;; Xah Lee's implementation of search-current-world
-(defun xah-search-current-word ()
-  "Call `isearch' on current word or text selection.
-`word' here is A to Z, a to z, and hyphen 「-」 and underline 「_」, independent
-of syntax table.
-URL `http://ergoemacs.org/emacs/modernization_isearch.html'
-Version 2015-04-09"
-  (interactive)
-  (let ( ξp1 ξp2 )
-    (if (use-region-p)
-        (progn
-          (setq ξp1 (region-beginning))
-          (setq ξp2 (region-end)))
-      (save-excursion
-        (skip-chars-backward "-_A-Za-z0-9")
-        (setq ξp1 (point))
-        (right-char)
-        (skip-chars-forward "-_A-Za-z0-9")
-        (setq ξp2 (point))))
-    (setq mark-active nil)
-    (when (< ξp1 (point))
-      (goto-char ξp1))
-    (isearch-mode t)
-    (isearch-yank-string (buffer-substring-no-properties ξp1 ξp2))))
-
-
 ;; Set default theme
 (load-theme 'monokai t)
-
-
-;; Set initial and default frame size
-(setq initial-frame-alist '((width . 150) (height . 70)))
-(setq default-frame-alist '((width . 120) (height . 60)))
 
 
 ;; scroll one line at a time (less "jumpy" than defaults)
@@ -76,12 +34,30 @@ Version 2015-04-09"
 (setq sml/mode-width 'full)
 
 
-;; Set default font, use smaller font on laptop
+;; Check if the system is my MacBook Pro
+(defun computer-is-violin ()
+  "Return true if the system we are running on is my MacBook Pro."
+  (interactive)
+  (string-equal
+   (if (string-match "^\\([a-zA-Z0-9_-]+\\)\\." system-name)
+       (match-string 1 system-name)
+     system-name)
+   "Violin"))
+
+
+;; Set default font, initial/default frame size
 (if (computer-is-violin)
     (progn
+      ;; Use smaller font on laptop
       (add-to-list 'default-frame-alist '(font . "PragmataPro-13"))
-      )
-  (add-to-list 'default-frame-alist '(font . "Menlo-15")))
+      ;; Set smaller frame frame size
+      (setq initial-frame-alist '((width . 174) (height . 53)))
+      (setq default-frame-alist '((width . 120) (height . 50))))
+  (progn
+    (add-to-list 'default-frame-alist '(font . "Menlo-15"))
+    (setq initial-frame-alist '((width . 187) (height . 67)))
+    (setq default-frame-alist '((width . 120) (height . 60))))
+  )
 
 
 ;; Display “lambda” as “λ”
@@ -158,8 +134,42 @@ Version 2015-04-09"
 (setq aw-dispatch-always t)
 
 
+;; Xah Lee's implementation of search-current-world
+(defun xah-search-current-word ()
+  "Call `isearch' on current word or text selection.
+`word' here is A to Z, a to z, and hyphen - and underline _, independent
+of syntax table.
+URL `http://ergoemacs.org/emacs/modernization_isearch.html'
+Version 2015-04-09"
+  (interactive)
+  (let ( ξp1 ξp2 )
+    (if (use-region-p)
+        (progn
+          (setq ξp1 (region-beginning))
+          (setq ξp2 (region-end)))
+      (save-excursion
+        (skip-chars-backward "-_A-Za-z0-9")
+        (setq ξp1 (point))
+        (right-char)
+        (skip-chars-forward "-_A-Za-z0-9")
+        (setq ξp2 (point))))
+    (setq mark-active nil)
+    (when (< ξp1 (point))
+      (goto-char ξp1))
+    (isearch-mode t)
+    (isearch-yank-string (buffer-substring-no-properties ξp1 ξp2))))
+
+
 ;; Bind `C-*' and `C-#' to search current word, similar to VIM
 (global-set-key (kbd "C-*") 'xah-search-current-word)
+(progn
+  ;; Set arrow keys in isearch.
+  ;; http://ergoemacs.org/emacs/emacs_isearch_by_arrow_keys.html
+  ;; Left/right is backward/forward, up/down is history. Press Return to exit.
+  (define-key isearch-mode-map (kbd "<up>") 'isearch-ring-retreat )
+  (define-key isearch-mode-map (kbd "<down>") 'isearch-ring-advance )
+  (define-key isearch-mode-map (kbd "<left>") 'isearch-repeat-backward)
+  (define-key isearch-mode-map (kbd "<right>") 'isearch-repeat-forward))
 
 
 ;; Map HOME and END key to be same as C-a and C-e
