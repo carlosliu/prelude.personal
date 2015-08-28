@@ -49,10 +49,21 @@
 (if (computer-is-violin)
     (progn
       ;; Use smaller font on laptop
-      (add-to-list 'default-frame-alist '(font . "PragmataPro-13"))
-      ;; Set smaller frame frame size
-      (setq initial-frame-alist '((width . 174) (height . 53)))
-      (setq default-frame-alist '((width . 120) (height . 50))))
+      (add-to-list 'default-frame-alist '(font . "PragmataPro-14"))
+      (setq-default line-spacing 4)
+      ;; Near maximize frame size on laptop
+      ;; http://emacs.stackexchange.com/a/10825
+      (let ((px (display-pixel-width))
+            (py (display-pixel-height))
+            (fx (frame-char-width))
+            (fy (frame-char-height))
+            tx ty)
+        (setq tx (- (/ px fx) 6))
+        (setq ty (- (/ py fy) 4))
+        (setq initial-frame-alist '((top . 2) (left . 2)))
+        (add-to-list 'default-frame-alist (cons 'width tx))
+        (add-to-list 'default-frame-alist (cons 'height ty)))
+      )
   (progn
     (add-to-list 'default-frame-alist '(font . "Menlo-15"))
     (setq initial-frame-alist '((width . 187) (height . 67)))
