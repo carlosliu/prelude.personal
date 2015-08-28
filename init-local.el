@@ -26,12 +26,19 @@
       scroll-conservatively 100000)
 
 
-;; Compact mode line
+;; Customize more compact mode line
 (require 'smart-mode-line)
-(setq sml/shorten-directory t)
-(setq sml/shorten-modes t)
-(setq sml/name-width 25)
-(setq sml/mode-width 'full)
+(setq sml/shorten-directory t
+      sml/shorten-modes t
+      sml/name-width 25
+      sml/mode-width 'full)
+(require 'rich-minority)
+(setq rm-blacklist '(" Fly"
+                     " guru"
+                     " Helm"
+                     " Pre"
+                     " waka"
+                     " ws"))
 
 
 ;; Check if the system is my MacBook Pro
@@ -64,12 +71,17 @@
         (add-to-list 'default-frame-alist (cons 'width tx))
         (add-to-list 'default-frame-alist (cons 'height ty)))
       )
-  (progn
-    (add-to-list 'default-frame-alist '(font . "Menlo-15"))
-    (setq initial-frame-alist '((width . 187) (height . 67)))
-    (setq default-frame-alist '((width . 120) (height . 60))))
-  )
+  (add-to-list 'default-frame-alist '(font . "Menlo-15"))
+  (setq initial-frame-alist '((width . 187) (height . 67)))
+  (setq default-frame-alist '((width . 120) (height . 60))))
 
+
+;; Map mouse right click to spell check correction
+(require 'flyspell)
+(eval-after-load "flyspell"
+  '(progn
+     (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
+     (define-key flyspell-mouse-map [mouse-3] #'undefined)))
 
 ;; Display “lambda” as “λ”
 (global-prettify-symbols-mode 1)
