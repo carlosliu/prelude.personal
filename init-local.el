@@ -77,6 +77,7 @@
 
 
 ;; Map mouse right click to spell check correction
+;; http://stackoverflow.com/a/10997845
 (require 'flyspell)
 (eval-after-load "flyspell"
   '(progn
