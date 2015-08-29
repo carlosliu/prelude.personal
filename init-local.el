@@ -164,7 +164,7 @@
 (require 'popwin)
 (popwin-mode 1)
 (setq popwin:special-display-config
-      '(("*Help*" :height 40 :stick t)
+      '(("*Help*" :stick t)
         ;; Magit/vc
         ("*magit-commit*" :noselect t :height 40 :stick t)
         ("*magit-diff*" :noselect t :height 40)
@@ -180,10 +180,10 @@
         "*Compile-Log*"
         "*Shell Command Output*"
         ;; Terminal
-        ;; ("\\*ansi-term*\\*" :regexp t :height 30)
+        ;; ("\\*ansi-term\\*.*" :regexp t :height 30)
         ;; ("\\*terminal.*\\*" :regexp t :height 30)
         ;; ("*shell*" :height 30)
-        (term-mode :height 10 :stick t)
+        ;; (term-mode :height 10 :stick t)
         ;; slime
         "*slime-apropos*"
         "*slime-macroexpansion*"
