@@ -7,6 +7,7 @@
 ;; Load extra packages
 (prelude-require-packages '(monokai-theme
                             ace-window
+                            popwin
                             linum-off
                             neotree
                             google-translate
@@ -84,6 +85,7 @@
      (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
      (define-key flyspell-mouse-map [mouse-3] #'undefined)))
 
+
 ;; Display “lambda” as “λ”
 (global-prettify-symbols-mode 1)
 
@@ -156,6 +158,52 @@
 ;; o - maximize current window
 (require 'ace-window)
 (setq aw-dispatch-always t)
+
+
+;; Use popup window manager
+(require 'popwin)
+(popwin-mode 1)
+(setq popwin:special-display-config
+      '(("*Help*" :height 40 :stick t)
+        ;; Magit/vc
+        ("*magit-commit*" :noselect t :height 40 :stick t)
+        ("*magit-diff*" :noselect t :height 40)
+        ("*magit-edit-log*" :noselect t :height 15)
+        "*vc-diff*"
+        "*vc-change-log*"
+        ;; M-x compile
+        (compilation-mode :noselect t)
+        ;; Debug
+        "*Warnings*"
+        "*Backtrace*"
+        "*Messages*"
+        "*Compile-Log*"
+        "*Shell Command Output*"
+        ;; Terminal
+        ;; ("\\*ansi-term*\\*" :regexp t :height 30)
+        ;; ("\\*terminal.*\\*" :regexp t :height 30)
+        ;; ("*shell*" :height 30)
+        (term-mode :height 10 :stick t)
+        ;; slime
+        "*slime-apropos*"
+        "*slime-macroexpansion*"
+        "*slime-description*"
+        "*slime-xref*"
+        ("*slime-compilation*" :noselect t)
+        (sldb-mode :stick t)
+        slime-repl-mode
+        slime-connection-list-mode
+        ;; cider
+        "*cider-error*"
+        "*cider-macroexpansion*"
+        ("*cider-doc*" :stick t)
+        ("*cider-result*" :stick t)
+        ("*cider-src*" :stick t)
+        ;; undo-tree
+        (" *undo-tree*" :width 0.2 :position right)
+        ;; M-x dired-jump-other-window
+        (dired-mode :position top)
+        ))
 
 
 ;; Xah Lee's implementation of search-current-world

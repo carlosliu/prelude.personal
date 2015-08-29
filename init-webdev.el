@@ -13,7 +13,7 @@
 ;; Setup tern and company-tern
 (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
 (require 'company)
-(eval-after-load "company"
+(eval-after-load 'company
   '(progn
      (prelude-require-packages '(company-tern))
      (add-to-list 'company-backends 'company-tern)))
