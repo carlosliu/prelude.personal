@@ -11,7 +11,6 @@
                             linum-off
                             neotree
                             google-translate
-                            w3m
                             wakatime-mode))
 
 
