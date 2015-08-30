@@ -11,6 +11,7 @@
                             linum-off
                             neotree
                             google-translate
+                            w3m
                             wakatime-mode))
 
 
@@ -34,7 +35,8 @@
       sml/name-width 25
       sml/mode-width 'full)
 (require 'rich-minority)
-(setq rm-blacklist '(" Fly"
+(setq rm-blacklist '(" company"
+                     " Fly"
                      " guru"
                      " Helm"
                      " Pre"
@@ -70,8 +72,7 @@
         (setq ty (- (/ py fy) 4))
         (setq initial-frame-alist '((top . 2) (left . 2)))
         (add-to-list 'default-frame-alist (cons 'width tx))
-        (add-to-list 'default-frame-alist (cons 'height ty)))
-      )
+        (add-to-list 'default-frame-alist (cons 'height ty))))
   (add-to-list 'default-frame-alist '(font . "Menlo-15"))
   (setq initial-frame-alist '((width . 187) (height . 67)))
   (setq default-frame-alist '((width . 120) (height . 60))))
@@ -137,12 +138,10 @@
 
 ;; Disable current line highlight in eshell and ansi-term
 ;; http://emacs.stackexchange.com/a/9748
-(add-hook 'eshell-mode-hook (lambda ()
-                              (setq-local global-hl-line-mode
-                                          nil)))
-(add-hook 'term-mode-hook (lambda ()
-                            (setq-local global-hl-line-mode
-                                        nil)))
+(add-hook 'eshell-mode-hook
+          (lambda () (setq-local global-hl-line-mode nil)))
+(add-hook 'term-mode-hook
+          (lambda () (setq-local global-hl-line-mode nil)))
 
 
 ;; Turn off scroll bar
@@ -165,6 +164,7 @@
 (popwin-mode 1)
 (setq popwin:special-display-config
       '(("*Help*" :stick t)
+        ("helm" :regexp t)
         ;; Magit/vc
         ("*magit-commit*" :noselect t :height 40 :stick t)
         ("*magit-diff*" :noselect t :height 40)
@@ -183,7 +183,7 @@
         ;; ("\\*ansi-term\\*.*" :regexp t :height 30)
         ;; ("\\*terminal.*\\*" :regexp t :height 30)
         ;; ("*shell*" :height 30)
-        ;; (term-mode :height 10 :stick t)
+        ;; (term-mode :height 30 :stick t)
         ;; slime
         "*slime-apropos*"
         "*slime-macroexpansion*"
@@ -202,8 +202,7 @@
         ;; undo-tree
         (" *undo-tree*" :width 0.2 :position right)
         ;; M-x dired-jump-other-window
-        (dired-mode :position top)
-        ))
+        (dired-mode :position top)))
 
 
 ;; Xah Lee's implementation of search-current-world
