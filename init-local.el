@@ -8,6 +8,7 @@
 (prelude-require-packages '(monokai-theme
                             ace-window
                             popwin
+                            highlight-indentation
                             linum-off
                             neotree
                             google-translate
@@ -93,6 +94,10 @@
 ;; Turn on line number globally
 (require 'linum-off)
 (global-linum-mode 1)
+
+
+;; Load highlight-indentation minor mode
+(require 'highlight-indentation)
 
 
 ;; Default tab width
