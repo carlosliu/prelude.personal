@@ -70,12 +70,12 @@
             tx ty)
         (setq tx (- (/ px fx) 6))
         (setq ty (- (/ py fy) 4))
-        (setq initial-frame-alist '((top . 2) (left . 2)))
         (add-to-list 'default-frame-alist (cons 'width tx))
-        (add-to-list 'default-frame-alist (cons 'height ty))))
+        (add-to-list 'default-frame-alist (cons 'height ty))
+        (setq initial-frame-alist '((top . 2) (left . 2)))))
   (add-to-list 'default-frame-alist '(font . "Menlo-15"))
-  (setq initial-frame-alist '((width . 187) (height . 67)))
-  (setq default-frame-alist '((width . 120) (height . 60))))
+  (add-to-list 'default-frame-alist '((width . 120) (height . 60)))
+  (setq initial-frame-alist '((width . 187) (height . 67))))
 
 
 ;; Map mouse right click to spell check correction
