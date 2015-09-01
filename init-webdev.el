@@ -5,18 +5,20 @@
 ;;; Code:
 
 (prelude-require-packages '(less-css-mode
-                            skewer-mode
+                            ;; skewer-mode
                             tern
-                            nodejs-repl))
+                            company-tern
+                            nodejs-repl
+                            web-beautify))
 
 
 ;; Setup tern and company-tern
-(add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+;; (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
 (require 'company)
-(eval-after-load 'company
-  '(progn
-     (prelude-require-packages '(company-tern))
-     (add-to-list 'company-backends 'company-tern)))
+;; (eval-after-load 'company
+;;   '(progn
+;;      (prelude-require-packages '(company-tern))
+;;      ))
 
 
 (require 'js2-mode)
@@ -28,13 +30,21 @@
      (setq js2-missing-semi-one-line-override t)
      (setq js2-bounce-indent-p t)
      (setq js2-indent-switch-body t)
-     (setq-default js2-basic-offset 2)))
+     (setq-default js2-basic-offset 2)
+     (add-to-list 'company-backends 'company-tern)
+     ;; (add-to-list 'company-backends 'company-yasnippet)
+     ))
+(add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+;; (add-hook 'js2-mode-hook
+;;           (lambda ()
+;;             (set (make-local-variable 'company-backends)
+;;                  '((company-dabbrev-code company-yasnippet company-tern)))))
 
 
 ;; Hook skewer-mode
-(add-hook 'js2-mode-hook 'skewer-mode)
-(add-hook 'css-mode-hook 'skewer-css-mode)
-(add-hook 'html-mode-hook 'skewer-html-mode)
+;; (add-hook 'js2-mode-hook 'skewer-mode)
+;; (add-hook 'css-mode-hook 'skewer-css-mode)
+;; (add-hook 'html-mode-hook 'skewer-html-mode)
 
 
 (require 'web-mode)
