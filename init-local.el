@@ -98,6 +98,8 @@
 
 ;; Load highlight-indentation minor mode
 (require 'highlight-indentation)
+(dolist (hook '(emacs-lisp-mode-hook js2-mode-hook))
+  (add-hook hook 'highlight-indentation-current-column-mode))
 
 
 ;; Default tab width
