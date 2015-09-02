@@ -74,7 +74,8 @@
         (add-to-list 'default-frame-alist (cons 'height ty))
         (setq initial-frame-alist '((top . 2) (left . 2)))))
   (add-to-list 'default-frame-alist '(font . "Menlo-15"))
-  (add-to-list 'default-frame-alist '((width . 120) (height . 60)))
+  (add-to-list 'default-frame-alist '(width . 120))
+  (add-to-list 'default-frame-alist '(height . 60))
   (setq initial-frame-alist '((width . 187) (height . 67))))
 
 
@@ -128,12 +129,6 @@
 ;; EShell <TAB> file/directory completion case insensitive
 (require 'em-cmpl)
 (setq eshell-cmpl-ignore-case t)
-
-
-;; Save desktop mode
-(desktop-save-mode 1)
-(setq-default history-length 1000)
-(savehist-mode t)
 
 
 ;; Backup hard linked file by copying it
